@@ -1,0 +1,551 @@
+// DropPilot Multi-Tenant Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -------------------------------------------------------------
+// ENUMS
+// -------------------------------------------------------------
+
+enum UserRole {
+  PLATFORM_ADMIN
+  USER
+}
+
+enum StoreStatus {
+  DRAFT
+  PUBLISHED
+  SUSPENDED
+  ARCHIVED
+}
+
+enum StoreRole {
+  OWNER
+  ADMIN
+  EDITOR
+  FULFILLMENT
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+enum OrderStatus {
+  PENDING_PAYMENT
+  PAID
+  PROCESSING
+  PARTIALLY_FULFILLED
+  FULFILLED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  EXPIRED
+}
+
+enum FulfillmentStatus {
+  UNFULFILLED
+  SUBMITTED_TO_SUPPLIER
+  IN_TRANSIT
+  DELIVERED
+  FAILED
+}
+
+enum SupplierType {
+  ALIEXPRESS
+  CJ_DROPSHIPPING
+  SANDBOX_MOCK
+}
+
+// -------------------------------------------------------------
+// CORE AUTH & USER MODELS
+// -------------------------------------------------------------
+
+model User {
+  id                   String            @id @default(uuid())
+  email                String            @unique
+  passwordHash         String
+  name                 String
+  role                 UserRole          @default(USER)
+  emailVerified        Boolean           @default(false)
+  verificationToken    String?
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  memberships          StoreMembership[]
+  subscriptions        Subscription[]
+  auditLogs            AuditLog[]
+  notifications        Notification[]
+
+  @@index([email])
+}
+
+// -------------------------------------------------------------
+// MULTI-TENANT STORE & MEMBERSHIP MODELS
+// -------------------------------------------------------------
+
+model Store {
+  id               String            @id @default(uuid())
+  name             String
+  slug             String            @unique
+  status           StoreStatus       @default(DRAFT)
+  currency         String            @default("USD")
+  locale           String            @default("en-US")
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  templateId       String?
+  template         Template?         @relation(fields: [templateId], references: [id])
+
+  memberships      StoreMembership[]
+  domains          StoreDomain[]
+  themeConfigs     ThemeConfig[]
+  products         Product[]
+  categories       Category[]
+  customers        Customer[]
+  orders           Order[]
+  supplierConnections SupplierConnection[]
+  fulfillments     Fulfillment[]
+  auditLogs        AuditLog[]
+
+  @@index([slug])
+  @@index([status])
+}
+
+model StoreMembership {
+  id        String    @id @default(uuid())
+  userId    String
+  storeId   String
+  role      StoreRole @default(OWNER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, storeId])
+  @@index([storeId])
+  @@index([userId])
+}
+
+model StoreDomain {
+  id          String   @id @default(uuid())
+  storeId     String
+  domain      String   @unique
+  isPrimary   Boolean  @default(false)
+  isVerified  Boolean  @default(false)
+  dnsTxtToken String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@index([domain])
+  @@index([storeId])
+}
+
+// -------------------------------------------------------------
+// TEMPLATES & THEME CONFIGURATION
+// -------------------------------------------------------------
+
+model Template {
+  id          String   @id @default(uuid())
+  name        String
+  code        String   @unique // e.g. "minimal-modern", "fashion-lifestyle", "electronics-gadgets"
+  description String
+  previewUrl  String?
+  version     String   @default("1.0.0")
+  isDefault   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  stores      Store[]
+  themeConfigs ThemeConfig[]
+}
+
+model ThemeConfig {
+  id          String   @id @default(uuid())
+  storeId     String
+  templateId  String
+  version     Int      @default(1)
+  isPublished Boolean  @default(false)
+  config      Json     // Structured theme settings: colors, typography, hero, sections
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  template    Template @relation(fields: [templateId], references: [id])
+
+  @@index([storeId, isPublished])
+}
+
+// -------------------------------------------------------------
+// SUBSCRIPTIONS & PLANS
+// -------------------------------------------------------------
+
+model Plan {
+  id               String         @id @default(uuid())
+  code             String         @unique // STARTER, PRO, ENTERPRISE
+  name             String
+  description      String
+  monthlyPrice     Decimal        @db.Decimal(10, 2)
+  yearlyPrice      Decimal        @db.Decimal(10, 2)
+  currency         String         @default("USD")
+  maxStores        Int            @default(1)
+  maxProducts      Int            @default(50)
+  customDomains    Boolean        @default(false)
+  supplierSync     Boolean        @default(true)
+  maxTeamMembers   Int            @default(1)
+  analyticsEnabled Boolean        @default(false)
+  isActive         Boolean        @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  subscriptions    Subscription[]
+}
+
+model Subscription {
+  id                     String             @id @default(uuid())
+  userId                 String
+  planId                 String
+  status                 SubscriptionStatus @default(TRIALING)
+  provider               String             @default("RAZORPAY")
+  providerSubscriptionId String?            @unique
+  currentPeriodStart     DateTime           @default(now())
+  currentPeriodEnd       DateTime
+  cancelAtPeriodEnd      Boolean            @default(false)
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+
+  user                   User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan                   Plan               @relation(fields: [planId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+}
+
+// -------------------------------------------------------------
+// PRODUCT CATALOG & VARIANTS
+// -------------------------------------------------------------
+
+model Category {
+  id          String            @id @default(uuid())
+  storeId     String
+  name        String
+  slug        String
+  description String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  store       Store             @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  products    ProductCategory[]
+
+  @@unique([storeId, slug])
+  @@index([storeId])
+}
+
+model Product {
+  id             String            @id @default(uuid())
+  storeId        String
+  title          String
+  slug           String
+  description    String
+  price          Decimal           @db.Decimal(10, 2)
+  compareAtPrice Decimal?          @db.Decimal(10, 2)
+  supplierCost   Decimal?          @db.Decimal(10, 2)
+  sku            String?
+  inventoryCount Int               @default(0)
+  status         ProductStatus     @default(DRAFT)
+  seoTitle       String?
+  seoDescription String?
+  images         Json?             // Array of image URLs / metadata
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  store          Store             @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  variants       ProductVariant[]
+  categories     ProductCategory[]
+  supplierLinks  ProductSupplierLink[]
+  orderItems     OrderItem[]
+
+  @@unique([storeId, slug])
+  @@index([storeId, status])
+}
+
+model ProductVariant {
+  id             String      @id @default(uuid())
+  productId      String
+  title          String      // e.g. "Large / Blue"
+  sku            String?
+  price          Decimal     @db.Decimal(10, 2)
+  supplierCost   Decimal?    @db.Decimal(10, 2)
+  inventoryCount Int         @default(0)
+  options        Json?       // e.g. {"Size": "L", "Color": "Blue"}
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  product        Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  orderItems     OrderItem[]
+
+  @@index([productId])
+}
+
+model ProductCategory {
+  productId  String
+  categoryId String
+
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([productId, categoryId])
+}
+
+// -------------------------------------------------------------
+// SUPPLIERS & DROPSHIPPING INTEGRATION
+// -------------------------------------------------------------
+
+model Supplier {
+  id          String               @id @default(uuid())
+  name        String
+  type        SupplierType
+  apiBaseUrl  String?
+  isActive    Boolean              @default(true)
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @updatedAt
+
+  connections SupplierConnection[]
+}
+
+model SupplierConnection {
+  id                   String                @id @default(uuid())
+  storeId              String
+  supplierId           String
+  encryptedCredentials String                // AES-256-GCM encrypted payload
+  isActive             Boolean               @default(true)
+  lastSyncedAt         DateTime?
+  lastSyncError        String?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+
+  store                Store                 @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  supplier             Supplier              @relation(fields: [supplierId], references: [id])
+  productLinks         ProductSupplierLink[]
+  fulfillments         Fulfillment[]
+
+  @@unique([storeId, supplierId])
+  @@index([storeId])
+}
+
+model ProductSupplierLink {
+  id                   String             @id @default(uuid())
+  productId            String
+  supplierConnectionId String
+  externalProductId    String
+  externalVariantId    String?
+  lastSyncedCost       Decimal?           @db.Decimal(10, 2)
+  lastSyncedStock      Int?
+  lastSyncedAt         DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  product              Product            @relation(fields: [productId], references: [id], onDelete: Cascade)
+  supplierConnection   SupplierConnection @relation(fields: [supplierConnectionId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, supplierConnectionId])
+  @@index([externalProductId])
+}
+
+// -------------------------------------------------------------
+// CUSTOMERS, ORDERS & CHECKOUT
+// -------------------------------------------------------------
+
+model Customer {
+  id        String   @id @default(uuid())
+  storeId   String
+  email     String
+  name      String
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  orders    Order[]
+
+  @@unique([storeId, email])
+  @@index([storeId])
+}
+
+model Order {
+  id              String        @id @default(uuid())
+  storeId         String
+  customerId      String
+  orderNumber     String        // e.g. "#1001"
+  status          OrderStatus   @default(PENDING_PAYMENT)
+  currency        String        @default("USD")
+  subtotal        Decimal       @db.Decimal(10, 2)
+  taxAmount       Decimal       @default(0) @db.Decimal(10, 2)
+  shippingAmount  Decimal       @default(0) @db.Decimal(10, 2)
+  totalAmount     Decimal       @db.Decimal(10, 2)
+  shippingAddress Json          // Immutable snapshot of customer shipping address
+  billingAddress  Json?
+  idempotencyKey  String?       @unique
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  store           Store         @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  customer        Customer      @relation(fields: [customerId], references: [id])
+  items           OrderItem[]
+  payments        PaymentRecord[]
+  fulfillments    Fulfillment[]
+
+  @@index([storeId, status])
+  @@index([storeId, orderNumber])
+}
+
+model OrderItem {
+  id             String          @id @default(uuid())
+  orderId        String
+  productId      String?
+  variantId      String?
+  // Immutable snapshots
+  title          String
+  sku            String?
+  quantity       Int
+  priceSnapshot  Decimal         @db.Decimal(10, 2)
+  costSnapshot   Decimal?        @db.Decimal(10, 2)
+  currency       String          @default("USD")
+  createdAt      DateTime        @default(now())
+
+  order          Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product        Product?        @relation(fields: [productId], references: [id], onDelete: SetNull)
+  variant        ProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+}
+
+model PaymentRecord {
+  id                  String        @id @default(uuid())
+  orderId             String
+  provider            String        // RAZORPAY, STRIPE, SANDBOX
+  providerPaymentId   String?       @unique
+  providerOrderId     String?
+  status              PaymentStatus @default(PENDING)
+  amount              Decimal       @db.Decimal(10, 2)
+  currency            String        @default("USD")
+  rawEventPayload     Json?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  order               Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}
+
+model Fulfillment {
+  id                   String            @id @default(uuid())
+  orderId              String
+  storeId              String
+  supplierConnectionId String?
+  status               FulfillmentStatus @default(UNFULFILLED)
+  externalOrderId      String?
+  trackingNumber       String?
+  trackingUrl          String?
+  carrier              String?
+  retryCount           Int               @default(0)
+  lastError            String?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  order                Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  store                Store             @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  supplierConnection   SupplierConnection? @relation(fields: [supplierConnectionId], references: [id], onDelete: SetNull)
+
+  @@index([storeId, status])
+  @@index([orderId])
+}
+
+// -------------------------------------------------------------
+// WEBHOOKS, AUDIT LOGS & NOTIFICATIONS
+// -------------------------------------------------------------
+
+model WebhookEvent {
+  id             String    @id @default(uuid())
+  provider       String    // RAZORPAY_SUBSCRIPTION, RAZORPAY_ORDER, SUPPLIER_SYNC
+  eventId        String    @unique
+  payload        Json
+  signatureValid Boolean   @default(false)
+  isProcessed    Boolean   @default(false)
+  processedAt    DateTime?
+  error          String?
+  createdAt      DateTime  @default(now())
+
+  @@index([provider, eventId])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  storeId    String?
+  action     String   // e.g. "STORE_CREATED", "PRODUCT_UPDATED", "THEME_PUBLISHED"
+  metadata   Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  store      Store?   @relation(fields: [storeId], references: [id], onDelete: SetNull)
+
+  @@index([storeId])
+  @@index([userId])
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead])
+}
+
+model BackgroundJob {
+  id          String   @id @default(uuid())
+  name        String   // "FULFILL_ORDER", "SYNC_SUPPLIER_CATALOG"
+  payload     Json
+  status      String   // PENDING, RUNNING, COMPLETED, FAILED
+  attempts    Int      @default(0)
+  maxAttempts Int      @default(3)
+  lastError   String?
+  runAt       DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status, runAt])
+}

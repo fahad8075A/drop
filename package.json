@@ -1,0 +1,29 @@
+{
+  "name": "droppilot",
+  "version": "1.0.0",
+  "description": "Multi-Tenant Dropshipping Website Builder SaaS",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix server & npm run dev --prefix client",
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build:server": "npm run build --prefix server",
+    "build:client": "npm run build --prefix client",
+    "build": "npm run build:server && npm run build:client",
+    "test:server": "npm run test --prefix server",
+    "test:client": "npm run test --prefix client",
+    "test": "npm run test:server",
+    "lint": "npm run lint --prefix server && npm run lint --prefix client"
+  },
+  "keywords": [
+    "dropshipping",
+    "saas",
+    "multi-tenant",
+    "ecommerce",
+    "store-builder",
+    "nextjs",
+    "express"
+  ],
+  "author": "DropPilot Architecture Team",
+  "license": "MIT"
+}
