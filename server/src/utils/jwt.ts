@@ -11,13 +11,15 @@ export interface TokenPayload {
 const TOKEN_EXPIRY = "7d";
 export const COOKIE_NAME = "droppilot_session";
 
+const secret = config.JWT_SECRET || config.AUTH_SECRET;
+
 export function signSessionToken(payload: TokenPayload): string {
-  return jwt.sign(payload, config.AUTH_SECRET, { expiresIn: TOKEN_EXPIRY });
+  return jwt.sign(payload, secret, { expiresIn: TOKEN_EXPIRY });
 }
 
 export function verifySessionToken(token: string): TokenPayload | null {
   try {
-    return jwt.verify(token, config.AUTH_SECRET) as TokenPayload;
+    return jwt.verify(token, secret) as TokenPayload;
   } catch {
     return null;
   }

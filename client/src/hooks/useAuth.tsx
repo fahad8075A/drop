@@ -34,6 +34,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setActiveStore((prev) => (prev ? data.stores.find((s) => s.id === prev.id) || data.stores[0] : data.stores[0]));
       }
     } catch {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("droppilot_token");
+      }
       setUser(null);
       setStores([]);
       setActiveStore(null);

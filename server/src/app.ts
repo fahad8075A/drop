@@ -54,6 +54,28 @@ export function createApp(): Express {
   app.use(express.json({ limit: "10mb" }));
   app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
+  // Root welcome & API info endpoint
+  app.get("/", (req, res) => {
+    res.json({
+      success: true,
+      message: "DropPilot Multi-Tenant REST API Server is operational",
+      version: "1.0.0",
+      status: "online",
+      endpoints: {
+        health: "/api/v1/health",
+        auth: "/api/v1/auth",
+        stores: "/api/v1/stores",
+        catalog: "/api/v1/catalog",
+        orders: "/api/v1/orders",
+        public: "/api/v1/public",
+        suppliers: "/api/v1/suppliers",
+        subscriptions: "/api/v1/subscriptions",
+        admin: "/api/v1/admin",
+      },
+      frontendUrl: config.CLIENT_ORIGIN || "http://localhost:3000",
+    });
+  });
+
   // Health checks
   app.get("/health", (req, res) => {
     res.json({

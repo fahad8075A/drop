@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { authService } from "./auth.service.js";
 import { registerSchema, loginSchema } from "./auth.validation.js";
 import { setSessionCookie, clearSessionCookie } from "../../utils/jwt.js";
-import { sendSuccess } from "../../utils/response.js";
+import { sendSuccess, sendError } from "../../utils/response.js";
 
 export class AuthController {
   async register(req: Request, res: Response, next: NextFunction) {
@@ -39,11 +39,17 @@ export class AuthController {
   async me(req: Request, res: Response, next: NextFunction) {
     try {
       if (!req.user) {
-        throw new Error("Unauthorized");
+        clearSessionCookie(res);
+        return sendError(res, "Authentication required. Please sign in.", 401, "UNAUTHORIZED");
       }
       const data = await authService.getCurrentUser(req.user.userId);
+      if (!data) {
+        clearSessionCookie(res);
+        return sendError(res, "Session user not found. Please sign in again.", 401, "USER_NOT_FOUND");
+      }
       sendSuccess(res, data);
     } catch (err) {
+      clearSessionCookie(res);
       next(err);
     }
   }

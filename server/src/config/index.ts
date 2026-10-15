@@ -8,6 +8,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   DATABASE_URL: z.string().default("postgresql://postgres:postgres@localhost:5432/droppilot?schema=public"),
   AUTH_SECRET: z.string().min(16).default("super-secret-auth-key-change-this-in-production-min-32-chars-long"),
+  JWT_SECRET: z.string().default("super-secret-auth-key-change-this-in-production-min-32-chars-long"),
   ENCRYPTION_KEY: z.string().min(32).default("0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"),
   CLIENT_ORIGIN: z.string().default("http://localhost:3000"),
   REDIS_URL: z.string().default("redis://localhost:6379"),
