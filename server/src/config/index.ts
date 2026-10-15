@@ -13,7 +13,7 @@ const envSchema = z.object({
   REDIS_URL: z.string().default("redis://localhost:6379"),
   RAZORPAY_KEY_ID: z.string().default("rzp_test_mock_saas_key"),
   RAZORPAY_KEY_SECRET: z.string().default("mock_saas_secret"),
-  RAZORPAY_WEBHOOK_SECRET: z.string().default("mock_webhook_secret_key"),
+  RAZORPAY_WEBHOOK_SECRET: z.string().optional().default(""),
   SUPPLIER_API_BASE_URL: z.string().default("https://api-sg.aliexpress.com/sync"),
   SUPPLIER_CLIENT_ID: z.string().default("mock_supplier_client_id"),
   SUPPLIER_CLIENT_SECRET: z.string().default("mock_supplier_client_secret"),

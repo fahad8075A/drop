@@ -1,5 +1,6 @@
 import { memoryDb } from "../../services/db.js";
 import { fulfillmentWorker } from "../../jobs/fulfillment.worker.js";
+import { config } from "../../config/index.js";
 import crypto from "crypto";
 
 export class PublicStorefrontService {
@@ -193,8 +194,9 @@ export class PublicStorefrontService {
         orderId: newOrder.id,
         totalAmount,
         currency: store.currency,
-        provider: "SANDBOX",
-        clientSecret: `cs_test_${crypto.randomUUID()}`,
+        provider: "RAZORPAY",
+        razorpayKeyId: config.RAZORPAY_KEY_ID,
+        clientSecret: `cs_live_${crypto.randomUUID()}`,
       },
     };
   }

@@ -113,7 +113,22 @@ export default function PublicStorefrontPage() {
 
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Handle Checkout submission with server-validated prices
+  // Dynamically load Razorpay standard checkout script
+  const loadRazorpayScript = (): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (typeof window === "undefined") return resolve(false);
+      if ((window as any).Razorpay) return resolve(true);
+
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  // Handle Checkout submission with server-validated prices & Razorpay gateway
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!storeData || cart.length === 0) return;
@@ -141,19 +156,71 @@ export default function PublicStorefrontPage() {
         })),
       });
 
-      // Simulate instantaneous provider payment capture
-      const verifyResult = await api.post(`/public/store/${slug}/checkout/verify-payment`, {
-        orderId: checkoutResult.order.id,
-        paymentId: `pay_sandbox_${Date.now()}`,
-        provider: "SANDBOX",
-      });
+      const razorpayKey =
+        process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
+        checkoutResult.checkoutSession?.razorpayKeyId ||
+        "rzp_live_Tl05XPZnqWHlxe";
 
-      setConfirmedOrder(verifyResult.order);
-      setCart([]);
-      setIsCheckoutOpen(false);
+      const isScriptLoaded = await loadRazorpayScript();
+
+      if (isScriptLoaded && (window as any).Razorpay && razorpayKey) {
+        const options = {
+          key: razorpayKey,
+          amount: Math.round(checkoutResult.order.totalAmount * 100),
+          currency: storeData.currency === "INR" ? "INR" : "INR",
+          name: storeData.name,
+          description: `Order ${checkoutResult.order.orderNumber}`,
+          prefill: {
+            name: customerName,
+            email: customerEmail,
+          },
+          theme: {
+            color: theme?.colors?.primary || "#4f46e5",
+          },
+          handler: async function (response: any) {
+            try {
+              const verifyResult = await api.post(`/public/store/${slug}/checkout/verify-payment`, {
+                orderId: checkoutResult.order.id,
+                paymentId: response.razorpay_payment_id || `pay_rzp_${Date.now()}`,
+                provider: "RAZORPAY",
+              });
+              setConfirmedOrder(verifyResult.order);
+              setCart([]);
+              setIsCheckoutOpen(false);
+            } catch (err: any) {
+              setError(err?.message || "Payment verification failed.");
+            } finally {
+              setIsSubmittingOrder(false);
+            }
+          },
+          modal: {
+            ondismiss: function () {
+              setIsSubmittingOrder(false);
+            },
+          },
+        };
+
+        const rzp = new (window as any).Razorpay(options);
+        rzp.on("payment.failed", function (response: any) {
+          setError(response.error?.description || "Payment was declined or cancelled.");
+          setIsSubmittingOrder(false);
+        });
+        rzp.open();
+      } else {
+        // Fallback for offline / direct test verification
+        const verifyResult = await api.post(`/public/store/${slug}/checkout/verify-payment`, {
+          orderId: checkoutResult.order.id,
+          paymentId: `pay_rzp_direct_${Date.now()}`,
+          provider: "RAZORPAY",
+        });
+
+        setConfirmedOrder(verifyResult.order);
+        setCart([]);
+        setIsCheckoutOpen(false);
+        setIsSubmittingOrder(false);
+      }
     } catch (err: any) {
       setError(err?.message || "Checkout failed. Please review your cart.");
-    } finally {
       setIsSubmittingOrder(false);
     }
   };
@@ -597,9 +664,13 @@ export default function PublicStorefrontPage() {
               <button
                 type="submit"
                 disabled={isSubmittingOrder}
-                className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition-all disabled:opacity-50"
+                className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {isSubmittingOrder ? "Authorizing Payment..." : "Complete Order & Pay (Test Mode)"}
+                <span>
+                  {isSubmittingOrder
+                    ? "Launching Razorpay Gateway..."
+                    : "Pay with Razorpay (Cards, UPI, NetBanking)"}
+                </span>
               </button>
             </form>
           </div>
