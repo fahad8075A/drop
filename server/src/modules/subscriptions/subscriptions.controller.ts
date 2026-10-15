@@ -39,6 +39,15 @@ export class SubscriptionsController {
     }
   }
 
+  async verifyPayment(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await subscriptionsService.verifyPayment(req.user!.userId, req.body);
+      sendSuccess(res, result, "Subscription payment verified and activated.");
+    } catch (err) {
+      next(err);
+    }
+  }
+
   async webhook(req: Request, res: Response, next: NextFunction) {
     try {
       const signature = (req.headers["x-razorpay-signature"] as string) || "mock_signature";

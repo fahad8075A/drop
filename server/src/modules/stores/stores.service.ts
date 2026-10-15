@@ -40,9 +40,14 @@ export class StoresService {
       throw new Error(`The slug '${normalizedSlug}' is already claimed by another store.`);
     }
 
-    // 2. Entitlement check: verify user's plan store limit
-    const subscription = memoryDb.subscriptions.find((s) => s.userId === userId && s.status !== "EXPIRED");
-    const plan = subscription ? memoryDb.plans.find((p) => p.id === subscription.planId) : null;
+    // 2. Entitlement check: verify user has an active paid subscription
+    const subscription = memoryDb.subscriptions.find((s) => s.userId === userId && s.status === "ACTIVE");
+    if (!subscription) {
+      throw new Error(
+        "Active paid subscription required. Please select a plan and complete your payment with Razorpay."
+      );
+    }
+    const plan = memoryDb.plans.find((p) => p.id === subscription.planId);
     const currentOwnedStores = memoryDb.memberships.filter((m) => m.userId === userId && m.role === "OWNER").length;
 
     const maxAllowed = plan ? plan.maxStores : 1;

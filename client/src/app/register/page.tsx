@@ -23,7 +23,7 @@ export default function RegisterPage() {
 
     try {
       await register(name, email, password);
-      router.push("/onboarding");
+      router.push("/subscription");
     } catch (err: any) {
       setError(err?.message || "Registration failed. Please check details.");
     } finally {
@@ -44,7 +44,7 @@ export default function RegisterPage() {
           Create Your Store Builder Account
         </h2>
         <p className="mt-1 text-center text-xs text-slate-500">
-          Start your 14-day free trial. No credit card required.
+          Step 1: Create your credentials. Step 2: Select your plan & pay via Razorpay.
         </p>
       </RevealUp>
 

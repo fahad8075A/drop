@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "../../../hooks/useAuth";
 import { api } from "../../../lib/api";
 import { formatCurrency, formatDate } from "../../../lib/utils";
@@ -10,10 +11,12 @@ import {
   ShieldCheck,
   ArrowRight,
   AlertCircle,
+  ExternalLink,
 } from "lucide-react";
 
 export default function BillingPage() {
-  const { user, stores } = useAuth();
+  const router = useRouter();
+  const { user, stores, refreshUser } = useAuth();
   const [subscription, setSubscription] = useState<any | null>(null);
   const [plans, setPlans] = useState<any[]>([]);
   const [isUpgrading, setIsUpgrading] = useState(false);
@@ -32,18 +35,7 @@ export default function BillingPage() {
   }, []);
 
   const handleUpgradePlan = async (planCode: string) => {
-    setIsUpgrading(true);
-    setMessage(null);
-    try {
-      const session = await api.post("/subscriptions/checkout", { planCode });
-      setMessage(`Subscription upgraded to ${session.name}! Entitlements refreshed.`);
-      const updated = await api.get("/subscriptions/current");
-      setSubscription(updated);
-    } catch (err: any) {
-      alert(err?.message || "Failed to initiate subscription upgrade.");
-    } finally {
-      setIsUpgrading(false);
-    }
+    router.push("/subscription");
   };
 
   const currentPlan = subscription?.plan || {

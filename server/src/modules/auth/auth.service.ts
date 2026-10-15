@@ -25,18 +25,18 @@ export class AuthService {
 
     memoryDb.users.push(newUser);
 
-    // Default to Starter plan trial
+    // New merchant accounts start as UNPAID until plan is selected & paid via Razorpay
     const starterPlan = memoryDb.plans.find((p) => p.code === "STARTER");
     if (starterPlan) {
       memoryDb.subscriptions.push({
         id: `sub_${crypto.randomUUID().slice(0, 8)}`,
         userId: newUser.id,
         planId: starterPlan.id,
-        status: "TRIALING",
+        status: "UNPAID",
         provider: "RAZORPAY",
-        providerSubscriptionId: `sub_trial_${crypto.randomUUID().slice(0, 8)}`,
+        providerSubscriptionId: `sub_unpaid_${crypto.randomUUID().slice(0, 8)}`,
         currentPeriodStart: new Date().toISOString(),
-        currentPeriodEnd: new Date(Date.now() + 14 * 86400000).toISOString(),
+        currentPeriodEnd: new Date().toISOString(),
         cancelAtPeriodEnd: false,
       });
     }

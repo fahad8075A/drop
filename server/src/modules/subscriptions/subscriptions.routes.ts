@@ -16,6 +16,10 @@ router.post("/checkout", requireAuth, (req, res, next) =>
   subscriptionsController.createCheckout(req, res, next)
 );
 
+router.post("/verify-payment", requireAuth, (req, res, next) =>
+  subscriptionsController.verifyPayment(req, res, next)
+);
+
 // Signed provider webhook endpoint
 router.post("/webhook", (req, res, next) => subscriptionsController.webhook(req, res, next));
 

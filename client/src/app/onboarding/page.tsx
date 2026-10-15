@@ -17,7 +17,17 @@ import {
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { user, refreshUser } = useAuth();
+  const { user, subscription, refreshUser, isLoading } = useAuth();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (!user) {
+        router.push("/login?redirect=/onboarding");
+      } else if (subscription?.status !== "ACTIVE") {
+        router.push("/subscription");
+      }
+    }
+  }, [user, subscription, isLoading, router]);
 
   const [step, setStep] = useState(1);
   const [storeName, setStoreName] = useState("");

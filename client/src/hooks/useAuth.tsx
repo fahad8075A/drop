@@ -2,10 +2,11 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../lib/api";
-import { User, Store } from "../types";
+import { User, Store, Subscription } from "../types";
 
 interface AuthContextType {
   user: User | null;
+  subscription: Subscription | null;
   stores: Store[];
   activeStore: Store | null;
   setActiveStore: (store: Store) => void;
@@ -20,15 +21,17 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
   const [stores, setStores] = useState<Store[]>([]);
   const [activeStore, setActiveStore] = useState<Store | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const refreshUser = async () => {
     try {
-      const data = await api.get<{ user: User; stores: Store[] }>("/auth/me");
+      const data = await api.get<{ user: User; stores: Store[]; subscription: Subscription | null }>("/auth/me");
       setUser(data.user);
       setStores(data.stores);
+      setSubscription(data.subscription || null);
       if (data.stores.length > 0) {
         // Keep activeStore if still valid, or default to first
         setActiveStore((prev) => (prev ? data.stores.find((s) => s.id === prev.id) || data.stores[0] : data.stores[0]));
@@ -38,6 +41,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem("droppilot_token");
       }
       setUser(null);
+      setSubscription(null);
       setStores([]);
       setActiveStore(null);
     } finally {
@@ -93,6 +97,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider
       value={{
         user,
+        subscription,
         stores,
         activeStore,
         setActiveStore,

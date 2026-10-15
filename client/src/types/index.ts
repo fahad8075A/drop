@@ -191,7 +191,7 @@ export interface Subscription {
   id: string;
   userId: string;
   planId: string;
-  status: "TRIALING" | "ACTIVE" | "PAST_DUE" | "CANCELLED" | "EXPIRED";
+  status: "TRIALING" | "ACTIVE" | "PAST_DUE" | "CANCELLED" | "EXPIRED" | "UNPAID";
   currentPeriodEnd: string;
   plan?: Plan;
 }

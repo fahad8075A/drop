@@ -32,7 +32,7 @@ import {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, stores, activeStore, setActiveStore, logout, isLoading } = useAuth();
+  const { user, stores, activeStore, setActiveStore, logout, isLoading, subscription } = useAuth();
 
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [storeDropdownOpen, setStoreDropdownOpen] = useState(false);
@@ -44,6 +44,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   }, [pathname]);
+
+  // Enforce Razorpay subscription payment
+  useEffect(() => {
+    if (!isLoading && user) {
+      const isPaidActive = subscription?.status === "ACTIVE";
+      if (!isPaidActive && pathname !== "/dashboard/billing") {
+        router.push("/subscription");
+      }
+    }
+  }, [isLoading, user, subscription, pathname, router]);
 
   const navigation = [
     { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
@@ -70,6 +80,30 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!user) {
     router.push("/login");
     return null;
+  }
+
+  // If user has not paid for subscription, gate access to dashboard routes except billing
+  if (subscription?.status !== "ACTIVE" && pathname !== "/dashboard/billing") {
+    return (
+      <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-14 h-14 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 mb-4 shadow-sm animate-pulse">
+          <CreditCard className="w-7 h-7" />
+        </div>
+        <h2 className="text-xl font-black text-slate-900 tracking-tight">
+          Active Subscription Required
+        </h2>
+        <p className="text-xs text-slate-500 max-w-sm mt-1.5 mb-6 leading-relaxed">
+          Your account is currently unpaid. Please select a plan and complete your payment with Razorpay to access the store builder workspace.
+        </p>
+        <Link
+          href="/subscription"
+          className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/20 transition-all flex items-center gap-2"
+        >
+          <span>Select Plan & Pay with Razorpay</span>
+          <ExternalLink className="w-4 h-4" />
+        </Link>
+      </div>
+    );
   }
 
   const userInitial = user.name ? user.name.charAt(0).toUpperCase() : "A";

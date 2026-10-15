@@ -653,9 +653,14 @@ export class AiStoreService {
   ) {
     // 1. Subscription plan entitlement validation
     const subscription = memoryDb.subscriptions.find(
-      (s) => s.userId === userId && s.status !== "EXPIRED"
+      (s) => s.userId === userId && s.status === "ACTIVE"
     );
-    const plan = subscription ? memoryDb.plans.find((p) => p.id === subscription.planId) : null;
+    if (!subscription) {
+      throw new Error(
+        "Active paid subscription required. Please select a plan and complete your payment with Razorpay."
+      );
+    }
+    const plan = memoryDb.plans.find((p) => p.id === subscription.planId);
     const maxStores = plan ? plan.maxStores : 1;
 
     let store = data.storeId ? memoryDb.stores.find((s) => s.id === data.storeId) : null;
