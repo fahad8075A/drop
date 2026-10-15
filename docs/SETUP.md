@@ -43,7 +43,7 @@ Copy `.env.example` to `.env.local`:
 ```bash
 cp client/.env.example client/.env.local
 ```
-Ensure `NEXT_PUBLIC_API_URL` points to the Express API (default: `http://localhost:5000/api/v1`).
+Ensure `NEXT_PUBLIC_API_URL` points to the Express API (default: `https://drop-1-g1wz.onrender.com/api/v1`).
 
 ---
 
@@ -74,14 +74,14 @@ Open two separate terminal windows:
 cd server
 npm run dev
 ```
-Express REST API runs at: `http://localhost:5000`
+Express REST API runs at: `https://drop-1-g1wz.onrender.com`
 
 ### Terminal 2 - Frontend Client:
 ```powershell
 cd client
 npm run dev
 ```
-Next.js Application runs at: `http://localhost:3000`
+Next.js Application runs at: `https://drop-flame-ten.vercel.app`
 
 ---
 

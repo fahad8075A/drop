@@ -1,4 +1,7 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const envApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE_URL = envApiUrl.endsWith("/api/v1")
+  ? envApiUrl
+  : `${envApiUrl.replace(/\/$/, "")}/api/v1`;
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, string | number | boolean | undefined>;

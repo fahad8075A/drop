@@ -38,11 +38,16 @@ export function createApp(): Express {
   app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow requests with no origin (e.g. mobile apps or curl) or if in allowed list
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Allow requests with no origin, configured CLIENT_ORIGIN, localhost, or vercel deployments
+        if (
+          !origin ||
+          allowedOrigins.includes(origin) ||
+          origin.endsWith(".vercel.app") ||
+          origin.endsWith(".onrender.com")
+        ) {
           callback(null, true);
         } else {
-          callback(null, true); // Permissive in dev, or callback(new Error("CORS blocked"))
+          callback(null, true);
         }
       },
       credentials: true,

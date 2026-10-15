@@ -93,10 +93,10 @@ npm run prisma:seed
 ### 4. Run Development Servers
 In separate terminals:
 ```bash
-# Backend (Express API at http://localhost:5000)
+
 cd server && npm run dev
 
-# Frontend (Next.js at http://localhost:3000)
+
 cd client && npm run dev
 ```
 
