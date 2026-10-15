@@ -61,11 +61,10 @@ export function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-200 ${
-        scrolled
+      className={`sticky top-0 z-50 transition-all duration-200 ${scrolled
           ? "bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-xs py-2.5"
           : "bg-white/90 backdrop-blur-sm border-b border-slate-200/70 py-3.5"
-      }`}
+        }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Left: Brand Logo & System Status */}
@@ -82,9 +81,7 @@ export function Navbar() {
               <span className="text-xl font-black tracking-tight text-slate-900 group-hover:text-indigo-600 transition-colors">
                 DropPilot
               </span>
-              <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 shadow-2xs">
-                SaaS
-              </span>
+
             </div>
           </Link>
 
@@ -110,9 +107,8 @@ export function Navbar() {
             >
               <span>Platform</span>
               <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                  solutionsOpen ? "rotate-180 text-indigo-600" : "text-slate-400"
-                }`}
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${solutionsOpen ? "rotate-180 text-indigo-600" : "text-slate-400"
+                  }`}
               />
             </button>
 
