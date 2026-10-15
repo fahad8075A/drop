@@ -29,6 +29,7 @@ import {
   StaggerGrid,
   StaggerCard,
 } from "@/components/animations/MotionWrappers";
+import { StoreRenderer } from "@/components/storefront/StoreRenderer";
 
 export default function PublicStorefrontPage() {
   const params = useParams();
@@ -253,6 +254,83 @@ export default function PublicStorefrontPage() {
           Return to DropPilot Home
         </a>
       </div>
+    );
+  }
+
+  // Render AI-generated storefront when sections are configured
+  if (theme?.sections && Array.isArray(theme.sections)) {
+    return (
+      <StoreRenderer
+        config={theme}
+        liveProducts={products}
+        isInteractive={true}
+        onCheckoutSubmit={async (orderPayload: any) => {
+          const checkoutResult = await api.post(`/public/store/${slug}/checkout`, {
+            customer: orderPayload.customer,
+            shippingAddress: orderPayload.shippingAddress,
+            items: orderPayload.items.map((i: any) => ({
+              productId: i.productId,
+              quantity: i.quantity,
+            })),
+          });
+
+          const razorpayKey =
+            process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
+            checkoutResult.checkoutSession?.razorpayKeyId ||
+            "rzp_live_Tl05XPZnqWHlxe";
+
+          const isScriptLoaded = await loadRazorpayScript();
+
+          if (isScriptLoaded && (window as any).Razorpay && razorpayKey) {
+            return new Promise((resolve, reject) => {
+              const options = {
+                key: razorpayKey,
+                amount: Math.round(checkoutResult.order.totalAmount * 100),
+                currency: storeData.currency === "INR" ? "INR" : "INR",
+                name: storeData.name,
+                description: `Order ${checkoutResult.order.orderNumber}`,
+                prefill: {
+                  name: orderPayload.customer.name,
+                  email: orderPayload.customer.email,
+                },
+                theme: {
+                  color: theme?.theme?.primaryColor || "#0f172a",
+                },
+                handler: async function (response: any) {
+                  try {
+                    const verifyResult = await api.post(`/public/store/${slug}/checkout/verify-payment`, {
+                      orderId: checkoutResult.order.id,
+                      paymentId: response.razorpay_payment_id || `pay_rzp_${Date.now()}`,
+                      provider: "RAZORPAY",
+                    });
+                    resolve({ order: verifyResult.order });
+                  } catch (err: any) {
+                    reject(new Error(err?.message || "Payment verification failed."));
+                  }
+                },
+                modal: {
+                  ondismiss: function () {
+                    reject(new Error("Payment was cancelled or closed."));
+                  },
+                },
+              };
+
+              const rzp = new (window as any).Razorpay(options);
+              rzp.on("payment.failed", function (response: any) {
+                reject(new Error(response.error?.description || "Payment failed."));
+              });
+              rzp.open();
+            });
+          } else {
+            const verifyResult = await api.post(`/public/store/${slug}/checkout/verify-payment`, {
+              orderId: checkoutResult.order.id,
+              paymentId: `pay_rzp_direct_${Date.now()}`,
+              provider: "RAZORPAY",
+            });
+            return { order: verifyResult.order };
+          }
+        }}
+      />
     );
   }
 

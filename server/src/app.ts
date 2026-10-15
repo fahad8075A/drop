@@ -15,6 +15,7 @@ import publicRoutes from "./modules/public/public.routes.js";
 import suppliersRoutes from "./modules/suppliers/suppliers.routes.js";
 import subscriptionsRoutes from "./modules/subscriptions/subscriptions.routes.js";
 import adminRoutes from "./modules/admin/admin.routes.js";
+import aiRoutes from "./modules/ai/ai.routes.js";
 
 export function createApp(): Express {
   const app = express();
@@ -103,6 +104,7 @@ export function createApp(): Express {
   app.use("/api/v1/suppliers", suppliersRoutes);
   app.use("/api/v1/subscriptions", subscriptionsRoutes);
   app.use("/api/v1/admin", adminRoutes);
+  app.use("/api/v1/ai", aiRoutes);
 
   // 404 Handler
   app.use((req, res) => {

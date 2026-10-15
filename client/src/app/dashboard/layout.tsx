@@ -26,6 +26,7 @@ import {
   Menu,
   X,
   Code,
+  Sparkles,
 } from "lucide-react";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -49,7 +50,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { name: "My Stores", href: "/dashboard", icon: Store },
     { name: "Products & Inventory", href: "/dashboard/products", icon: Package },
     { name: "Orders & Routing", href: "/dashboard/orders", icon: ShoppingCart },
-    { name: "Website Builder", href: "/dashboard/design", icon: Palette },
+    { name: "AI Store Builder", href: "/dashboard/design", icon: Sparkles, badge: "AI" },
     { name: "Suppliers & Feeds", href: "/dashboard/suppliers", icon: Truck },
     { name: "Billing & Plans", href: "/dashboard/billing", icon: CreditCard },
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
@@ -166,8 +167,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
                     }`}
                   >
-                    <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-500"}`} />
-                    <span>{item.name}</span>
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-white" : "text-slate-500"}`} />
+                    <span className="flex-1">{item.name}</span>
+                    {(item as any).badge && (
+                      <span
+                        className={`text-[9px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-wider ${
+                          isActive
+                            ? "bg-white/20 text-white"
+                            : "bg-indigo-50 text-indigo-700 border border-indigo-200"
+                        }`}
+                      >
+                        {(item as any).badge}
+                      </span>
+                    )}
                   </Link>
                 );
               })}
