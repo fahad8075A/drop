@@ -27,6 +27,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const refreshUser = async () => {
+    // Check if token exists in localStorage before requesting /auth/me to avoid unnecessary 401 errors
+    const token = typeof window !== "undefined" ? localStorage.getItem("droppilot_token") : null;
+    if (!token) {
+      setUser(null);
+      setSubscription(null);
+      setStores([]);
+      setActiveStore(null);
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const data = await api.get<{ user: User; stores: Store[]; subscription: Subscription | null }>("/auth/me");
       setUser(data.user);

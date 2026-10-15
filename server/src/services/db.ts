@@ -68,7 +68,18 @@ export class MemoryDatabase {
       updatedAt: new Date().toISOString(),
     };
 
-    this.users.push(adminUser, alexUser, sarahUser);
+    const demoUser = {
+      id: "usr_demo_1",
+      email: "demo@merchant.com",
+      passwordHash: bcrypt.hashSync("password123", 10),
+      name: "Demo Merchant",
+      role: "USER",
+      emailVerified: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    this.users.push(adminUser, alexUser, sarahUser, demoUser);
 
     // 2. Plans
     this.plans.push(
@@ -142,6 +153,17 @@ export class MemoryDatabase {
         status: "ACTIVE",
         provider: "RAZORPAY",
         providerSubscriptionId: "sub_rzp_mock_sarah",
+        currentPeriodStart: new Date().toISOString(),
+        currentPeriodEnd: new Date(Date.now() + 30 * 86400000).toISOString(),
+        cancelAtPeriodEnd: false,
+      },
+      {
+        id: "sub_demo_1",
+        userId: demoUser.id,
+        planId: "plan_pro",
+        status: "ACTIVE",
+        provider: "RAZORPAY",
+        providerSubscriptionId: "sub_rzp_mock_demo",
         currentPeriodStart: new Date().toISOString(),
         currentPeriodEnd: new Date(Date.now() + 30 * 86400000).toISOString(),
         cancelAtPeriodEnd: false,
@@ -222,7 +244,9 @@ export class MemoryDatabase {
     this.memberships.push(
       { id: "mem_1", userId: alexUser.id, storeId: storeLumix.id, role: "OWNER" },
       { id: "mem_2", userId: alexUser.id, storeId: storePulse.id, role: "OWNER" },
-      { id: "mem_3", userId: sarahUser.id, storeId: storeVelvet.id, role: "OWNER" }
+      { id: "mem_3", userId: sarahUser.id, storeId: storeVelvet.id, role: "OWNER" },
+      { id: "mem_4", userId: demoUser.id, storeId: storeLumix.id, role: "OWNER" },
+      { id: "mem_5", userId: demoUser.id, storeId: storePulse.id, role: "OWNER" }
     );
 
     // Theme Configs
