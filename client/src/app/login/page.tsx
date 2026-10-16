@@ -41,7 +41,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col justify-center py-12 px-6 sm:px-8">
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-8">
       <RevealUp className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href="/" className="flex items-center justify-center gap-2 mb-6">
           <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-sm">
@@ -49,7 +49,7 @@ export default function LoginPage() {
           </div>
           <span className="text-2xl font-black tracking-tight text-slate-900">DropPilot</span>
         </Link>
-        <h2 className="text-center text-2xl font-black text-slate-900 tracking-tight">
+        <h2 className="text-center text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
           Sign In to Your Workspace
         </h2>
         <p className="mt-1 text-center text-xs text-slate-500">
@@ -57,13 +57,13 @@ export default function LoginPage() {
         </p>
       </RevealUp>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         {/* Quick 1-Click Evaluation Credentials */}
         <RevealFromLeft delay={0.08} className="mb-6 p-4 rounded-2xl bg-indigo-50/50 border border-indigo-100 shadow-sm">
           <p className="text-xs font-bold text-indigo-700 uppercase tracking-wider mb-2 flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4 text-indigo-600" /> 1-Click Demo Credentials
           </p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => fillDemoAccount("alex@droppilot.com", "OwnerPass123!")}
@@ -83,7 +83,7 @@ export default function LoginPage() {
           </div>
         </RevealFromLeft>
 
-        <RevealUp delay={0.15} className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-md">
+        <RevealUp delay={0.15} className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200/80 shadow-md">
           {error && (
             <div className="mb-6 p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center gap-2.5 text-xs text-rose-700 font-medium">
               <AlertCircle className="w-4 h-4 shrink-0" />

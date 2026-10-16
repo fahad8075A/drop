@@ -145,17 +145,17 @@ export function StoreRenderer({
         )}
 
         {/* Storefront Header */}
-        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-6 py-4 shadow-2xs">
+        <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 py-3 sm:py-4 shadow-2xs">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
             {/* Logo */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <span
                 style={{ color: theme.primaryColor || "#0f172a" }}
-                className="text-xl sm:text-2xl font-black tracking-tight"
+                className="text-lg sm:text-2xl font-black tracking-tight"
               >
                 {header.logoText || brand.name}
               </span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 hidden xs:inline">
                 Verified Store
               </span>
             </div>
@@ -174,7 +174,7 @@ export function StoreRenderer({
             </nav>
 
             {/* Search & Cart Actions */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <div className="relative hidden sm:block w-48 lg:w-60">
                 <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
@@ -190,7 +190,7 @@ export function StoreRenderer({
               <button
                 type="button"
                 onClick={() => setIsCartOpen(true)}
-                className="relative flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800 transition-colors shadow-2xs"
+                className="relative flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800 transition-colors shadow-2xs"
               >
                 <ShoppingBag
                   style={{ color: theme.accentColor || "#4f46e5" }}
@@ -212,7 +212,7 @@ export function StoreRenderer({
 
         {/* HERO SECTION */}
         {heroSection && (
-          <section className="relative py-16 sm:py-24 px-6 border-b border-slate-200 overflow-hidden">
+          <section className="relative py-10 sm:py-20 px-4 sm:px-6 border-b border-slate-200 overflow-hidden">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
               <div className="lg:col-span-6 space-y-5">
                 {heroSection.data?.badgeText && (
@@ -275,10 +275,10 @@ export function StoreRenderer({
 
         {/* CATEGORIES SECTION */}
         {categoriesSection && categoriesSection.data?.items?.length > 0 && (
-          <section id="categories" className="py-16 px-6 border-b border-slate-200 bg-slate-50/60">
+          <section id="categories" className="py-10 sm:py-16 px-4 sm:px-6 border-b border-slate-200 bg-slate-50/60">
             <div className="max-w-7xl mx-auto space-y-8">
               <div className="text-center max-w-xl mx-auto">
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                <h3 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight">
                   {categoriesSection.data?.title || "Explore Categories"}
                 </h3>
                 {categoriesSection.data?.subtitle && (
@@ -288,12 +288,12 @@ export function StoreRenderer({
                 )}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
                 {categoriesSection.data.items.map((cat: any) => (
                   <a
                     key={cat.id}
                     href="#products"
-                    className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-2xs hover:shadow-md transition-all h-64 flex flex-col justify-end p-5"
+                    className="group relative rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-2xs hover:shadow-md transition-all h-52 sm:h-64 flex flex-col justify-end p-4 sm:p-5"
                   >
                     <img
                       src={cat.image}
@@ -305,7 +305,7 @@ export function StoreRenderer({
                       <p className="text-[10px] font-bold uppercase tracking-wider text-slate-300">
                         {cat.itemCount || "Featured"}
                       </p>
-                      <h4 className="text-xl font-black text-white">{cat.name}</h4>
+                      <h4 className="text-lg sm:text-xl font-black text-white">{cat.name}</h4>
                     </div>
                   </a>
                 ))}
@@ -316,10 +316,10 @@ export function StoreRenderer({
 
         {/* PRODUCTS CATALOG GRID */}
         {productsSection && (
-          <section id="products" className="py-16 px-6 max-w-7xl mx-auto">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
+          <section id="products" className="py-10 sm:py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 pb-4 border-b border-slate-200">
               <div>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                <h3 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight">
                   {productsSection.data?.title || "Featured Products"}
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
@@ -333,7 +333,7 @@ export function StoreRenderer({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {filteredProducts.map((p: any) => {
                 const discount =
                   p.compareAtPrice && p.compareAtPrice > p.price
@@ -424,20 +424,20 @@ export function StoreRenderer({
 
         {/* PROMOTIONAL CALLOUT BANNER */}
         {promoSection && (
-          <section className="py-16 px-6 bg-slate-900 text-white border-y border-slate-800">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <section className="py-10 sm:py-16 px-4 sm:px-6 bg-slate-900 text-white border-y border-slate-800">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
               <div className="lg:col-span-7 space-y-4">
                 <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/10 text-white inline-block">
                   {promoSection.data?.tag || "Limited Time Offer"}
                 </span>
-                <h3 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                <h3 className="text-xl sm:text-4xl font-black text-white tracking-tight">
                   {promoSection.data?.headline || "Special Promotional Savings"}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
                   {promoSection.data?.description ||
                     "Enter promo code at checkout for immediate cart savings."}
                 </p>
-                <div className="pt-2 flex items-center gap-3">
+                <div className="pt-2 flex flex-wrap items-center gap-3">
                   <div className="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 font-mono text-sm font-bold text-amber-300">
                     CODE: {promoSection.data?.code || "WELCOME10"}
                   </div>
@@ -468,13 +468,13 @@ export function StoreRenderer({
 
         {/* CUSTOMER REVIEWS */}
         {reviewsSection && (
-          <section id="reviews" className="py-16 px-6 border-b border-slate-200 bg-white">
+          <section id="reviews" className="py-10 sm:py-16 px-4 sm:px-6 border-b border-slate-200 bg-white">
             <div className="max-w-7xl mx-auto space-y-8">
               <div className="text-center max-w-xl mx-auto">
                 <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest block mb-1">
                   Community Proof
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                <h3 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight">
                   {reviewsSection.data?.title || "Customer Reviews"}
                 </h3>
                 <p className="text-xs text-slate-500 mt-1">
@@ -483,11 +483,11 @@ export function StoreRenderer({
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {(reviewsSection.data?.items || []).map((rev: any) => (
                   <div
                     key={rev.id}
-                    className="p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3"
+                    className="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3"
                   >
                     <div className="flex items-center gap-1 text-amber-400">
                       {[...Array(rev.rating || 5)].map((_, i) => (
@@ -514,12 +514,12 @@ export function StoreRenderer({
 
         {/* NEWSLETTER SECTION */}
         {newsletterSection && (
-          <section className="py-16 px-6 bg-slate-50/70 border-b border-slate-200">
+          <section className="py-10 sm:py-16 px-4 sm:px-6 bg-slate-50/70 border-b border-slate-200">
             <div className="max-w-2xl mx-auto text-center space-y-4">
               <div className="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-600 flex items-center justify-center mx-auto">
                 <Mail className="w-5 h-5" />
               </div>
-              <h3 className="text-2xl font-black text-slate-900 tracking-tight">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
                 {newsletterSection.data?.headline || "Stay Connected"}
               </h3>
               <p className="text-xs sm:text-sm text-slate-500">
@@ -565,8 +565,8 @@ export function StoreRenderer({
       </div>
 
       {/* FOOTER */}
-      <footer className="border-t border-slate-200 py-10 px-6 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <footer className="border-t border-slate-200 py-8 sm:py-10 px-4 sm:px-6 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left">
           <div>
             <span className="font-black text-slate-900 text-sm mr-2">{brand.name}</span>
             <span>— {brand.tagline}</span>
@@ -580,7 +580,7 @@ export function StoreRenderer({
       {/* SHOPPING CART DRAWER */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/50 backdrop-blur-xs">
-          <div className="w-full max-w-md bg-white border-l border-slate-200 h-full flex flex-col justify-between p-6 shadow-2xl">
+          <div className="w-full max-w-md bg-white border-l border-slate-200 h-full flex flex-col justify-between p-4 sm:p-6 shadow-2xl">
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
                 <div className="flex items-center gap-2">

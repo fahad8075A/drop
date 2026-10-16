@@ -177,16 +177,16 @@ export function ProductCarousel() {
       onTouchEnd={handleTouchEnd}
       aria-roledescription="carousel"
       aria-label="High-Margin Dropshipping Products Carousel"
-      className="outline-none relative rounded-3xl bg-white border border-slate-200/90 shadow-sm p-6 sm:p-8"
+      className="outline-none relative rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-sm p-4 sm:p-8"
     >
       {/* Header with Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 sm:pb-6 border-b border-slate-100">
         <div>
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-[11px] font-bold mb-1.5">
             <Package className="w-3.5 h-3.5" />
             <span>High-Demand Product Catalog</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          <h3 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight">
             Curated Winning SKUs with Live Supplier Margin Math
           </h3>
         </div>
@@ -226,15 +226,15 @@ export function ProductCarousel() {
       </div>
 
       {/* Main Card Transition Area */}
-      <div className="py-6 overflow-hidden">
+      <div className="py-5 sm:py-6 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={current.id}
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 28 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
+            exit={{ opacity: 0, x: -28 }}
             transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center"
           >
             {/* Left: Product Image */}
             <div className="lg:col-span-5 relative">
@@ -244,11 +244,11 @@ export function ProductCarousel() {
                   alt={current.title}
                   className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
-                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full border border-slate-200 text-[11px] font-bold text-slate-800 shadow-xs flex items-center gap-1.5">
+                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-sm px-3 py-1 rounded-full border border-slate-200 text-[10px] sm:text-[11px] font-bold text-slate-800 shadow-xs flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
                   <span>{current.supplier}</span>
                 </div>
-                <div className="absolute bottom-3 right-3 bg-emerald-600 text-white px-3 py-1 rounded-full text-[11px] font-black shadow-sm flex items-center gap-1">
+                <div className="absolute bottom-3 right-3 bg-emerald-600 text-white px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-black shadow-sm flex items-center gap-1">
                   <TrendingUp className="w-3 h-3" />
                   <span>+{current.margin}% Net Margin</span>
                 </div>
@@ -256,34 +256,40 @@ export function ProductCarousel() {
             </div>
 
             {/* Right: Specifications & Dropship Margin Economics */}
-            <div className="lg:col-span-7 space-y-5">
+            <div className="lg:col-span-7 space-y-4 sm:space-y-5">
               <div>
                 <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider block mb-1">
                   {current.category}
                 </span>
-                <h4 className="text-2xl sm:text-3xl font-black text-slate-900 leading-snug">
+                <h4 className="text-xl sm:text-3xl font-black text-slate-900 leading-snug">
                   {current.title}
                 </h4>
               </div>
 
               {/* Pricing & Margin Grid */}
-              <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
-                <div>
-                  <p className="text-[11px] font-bold text-slate-500 uppercase">Supplier Cost</p>
-                  <p className="text-xl font-black text-slate-800">${current.cost.toFixed(2)}</p>
-                  <p className="text-[10px] text-slate-400 font-medium">B2B wholesale unit</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 sm:p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
+                <div className="flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
+                  <div>
+                    <p className="text-[11px] font-bold text-slate-500 uppercase">Supplier Cost</p>
+                    <p className="text-[10px] text-slate-400 font-medium">B2B wholesale unit</p>
+                  </div>
+                  <p className="text-lg sm:text-xl font-black text-slate-800">${current.cost.toFixed(2)}</p>
                 </div>
-                <div className="border-x border-slate-200 px-3">
-                  <p className="text-[11px] font-bold text-slate-500 uppercase">Retail Price</p>
-                  <p className="text-xl font-black text-indigo-600">${current.retailPrice.toFixed(2)}</p>
-                  <p className="text-[10px] text-slate-400 font-medium">Tested D2C benchmark</p>
+                <div className="border-t sm:border-t-0 sm:border-x border-slate-200 pt-2 sm:pt-0 sm:px-3 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
+                  <div>
+                    <p className="text-[11px] font-bold text-slate-500 uppercase">Retail Price</p>
+                    <p className="text-[10px] text-slate-400 font-medium">Tested D2C benchmark</p>
+                  </div>
+                  <p className="text-lg sm:text-xl font-black text-indigo-600">${current.retailPrice.toFixed(2)}</p>
                 </div>
-                <div>
-                  <p className="text-[11px] font-bold text-emerald-600 uppercase">Profit / Sale</p>
-                  <p className="text-xl font-black text-emerald-600">
+                <div className="border-t sm:border-t-0 border-slate-200 pt-2 sm:pt-0 flex sm:flex-col justify-between sm:justify-start items-center sm:items-start">
+                  <div>
+                    <p className="text-[11px] font-bold text-emerald-600 uppercase">Profit / Sale</p>
+                    <p className="text-[10px] text-emerald-700 font-semibold">{current.margin}% margin</p>
+                  </div>
+                  <p className="text-lg sm:text-xl font-black text-emerald-600">
                     +${(current.retailPrice - current.cost).toFixed(2)}
                   </p>
-                  <p className="text-[10px] text-emerald-700 font-semibold">{current.margin}% margin</p>
                 </div>
               </div>
 

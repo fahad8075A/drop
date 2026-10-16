@@ -22,15 +22,15 @@ export function RevealFromLeft({
 
   return (
     <motion.div
-      initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+      initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -28 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once, margin: "-40px", amount: 0.15 }}
+      viewport={{ once, margin: "-30px", amount: 0.1 }}
       transition={{
         duration,
         delay,
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
-      className={className}
+      className={`max-w-full ${className}`}
     >
       {children}
     </motion.div>
@@ -48,15 +48,15 @@ export function RevealFromRight({
 
   return (
     <motion.div
-      initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+      initial={shouldReduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 28 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once, margin: "-40px", amount: 0.15 }}
+      viewport={{ once, margin: "-30px", amount: 0.1 }}
       transition={{
         duration,
         delay,
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
-      className={className}
+      className={`max-w-full ${className}`}
     >
       {children}
     </motion.div>
@@ -140,15 +140,15 @@ export function TwoSidedSection({
   once?: boolean;
 }) {
   return (
-    <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${className}`}>
-      <div className={leftSpan}>
+    <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center overflow-hidden ${className}`}>
+      <div className={`${leftSpan} min-w-0 max-w-full overflow-hidden`}>
         {reversed ? (
           <RevealFromRight once={once} delay={0.08}>{leftContent}</RevealFromRight>
         ) : (
           <RevealFromLeft once={once} delay={0.08}>{leftContent}</RevealFromLeft>
         )}
       </div>
-      <div className={rightSpan}>
+      <div className={`${rightSpan} min-w-0 max-w-full overflow-hidden`}>
         {reversed ? (
           <RevealFromLeft once={once} delay={0.16}>{rightContent}</RevealFromLeft>
         ) : (

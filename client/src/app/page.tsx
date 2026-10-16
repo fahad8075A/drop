@@ -92,29 +92,29 @@ export default function MarketingPage() {
       <Navbar />
 
       {/* SECTION 1: HERO (Two-Sided Animation: Left Content from Left, Right UI Preview from Right) */}
-      <section className="relative pt-16 pb-20 px-6 border-b border-slate-200 bg-white">
+      <section className="relative pt-8 sm:pt-16 pb-12 sm:pb-20 px-4 sm:px-6 border-b border-slate-200 bg-white">
         <div className="max-w-7xl mx-auto">
           <TwoSidedSection
             leftContent={
-              <div className="space-y-6">
+              <div className="space-y-5 sm:space-y-6">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700 shadow-2xs">
                   <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
-                
+                  <span>⚡ Autonomous AI Dropshipping Platform</span>
                 </div>
 
-                <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-slate-900 leading-[1.08]">
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.1]">
                   Build, Launch & Scale{" "}
                   <span className="text-indigo-600">Autonomous Ecommerce</span> Brands
                 </h1>
 
-                <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+                <p className="text-sm sm:text-lg text-slate-600 leading-relaxed font-normal">
                   Create high-converting online stores in seconds without writing code. Sync verified B2B suppliers, automate real-time profit margins, and fulfill orders hands-free with isolated tenant data integrity.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                   <Link
                     href="/register"
-                    className="inline-flex items-center justify-center gap-2 text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3.5 rounded-xl shadow-md shadow-indigo-600/25 transition-all text-center"
+                    className="inline-flex items-center justify-center gap-2 text-sm font-bold bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white px-6 sm:px-8 py-3.5 rounded-xl shadow-md shadow-indigo-600/25 transition-all text-center"
                   >
                     <span>Start 14-Day Free Trial</span>
                     <ArrowRight className="w-4 h-4" />
@@ -144,7 +144,7 @@ export default function MarketingPage() {
                   </div>
                   <Link
                     href="/login"
-                    className="whitespace-nowrap px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-indigo-700 text-xs font-bold border border-slate-200 transition-colors shadow-2xs"
+                    className="whitespace-nowrap px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-indigo-700 text-xs font-bold border border-slate-200 transition-colors shadow-2xs self-stretch sm:self-auto text-center"
                   >
                     Quick Log In →
                   </Link>
@@ -154,14 +154,15 @@ export default function MarketingPage() {
             rightContent={
               <div className="relative">
                 {/* Decorative border frame with live preview */}
-                <div className="rounded-3xl border border-slate-200/90 bg-white p-5 shadow-xl space-y-4">
+                <div className="rounded-3xl border border-slate-200/90 bg-white p-4 sm:p-5 shadow-xl space-y-4">
                   {/* Mock browser header */}
                   <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                     <div className="flex items-center gap-2">
                       <span className="w-3 h-3 rounded-full bg-rose-400" />
                       <span className="w-3 h-3 rounded-full bg-amber-400" />
                       <span className="w-3 h-3 rounded-full bg-emerald-400" />
-                      <span className="text-[11px] font-mono text-slate-400 ml-2">droppilot.com/dashboard/overview</span>
+                      <span className="text-[11px] font-mono text-slate-400 ml-2 hidden sm:inline">droppilot.com/dashboard/overview</span>
+                      <span className="text-[11px] font-mono text-slate-400 ml-2 sm:hidden">droppilot.com</span>
                     </div>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -170,7 +171,7 @@ export default function MarketingPage() {
                   </div>
 
                   {/* Mock Dashboard Card */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100">
                       <p className="text-[11px] font-bold text-indigo-900 uppercase">Today's Revenue</p>
                       <p className="text-2xl font-black text-indigo-700 mt-1">$4,892.40</p>
@@ -189,32 +190,34 @@ export default function MarketingPage() {
                   </div>
 
                   {/* Real-Time Supplier Order Activity Table Mock */}
-                  <div className="rounded-2xl border border-slate-100 overflow-hidden text-xs">
-                    <div className="bg-slate-50 px-4 py-2 text-[10px] font-bold text-slate-500 uppercase flex justify-between">
-                      <span>Recent Order</span>
-                      <span>Supplier Status</span>
-                      <span>Net Profit</span>
-                    </div>
-                    <div className="divide-y divide-slate-100 bg-white">
-                      <div className="px-4 py-3 flex items-center justify-between">
-                        <div>
-                          <p className="font-bold text-slate-900">Walnut Desk Lamp</p>
-                          <p className="text-[10px] text-slate-400">Order #DP-9481 · Lumix Store</p>
-                        </div>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
-                          Shipped (CJ Express)
-                        </span>
-                        <span className="font-black text-emerald-600">+$42.50</span>
+                  <div className="rounded-2xl border border-slate-100 overflow-x-auto text-xs">
+                    <div className="min-w-[280px]">
+                      <div className="bg-slate-50 px-4 py-2 text-[10px] font-bold text-slate-500 uppercase flex justify-between">
+                        <span>Recent Order</span>
+                        <span>Supplier Status</span>
+                        <span>Net Profit</span>
                       </div>
-                      <div className="px-4 py-3 flex items-center justify-between">
-                        <div>
-                          <p className="font-bold text-slate-900">ANC Headphones</p>
-                          <p className="text-[10px] text-slate-400">Order #DP-9480 · Pulse Store</p>
+                      <div className="divide-y divide-slate-100 bg-white">
+                        <div className="px-4 py-3 flex items-center justify-between gap-2">
+                          <div>
+                            <p className="font-bold text-slate-900">Walnut Desk Lamp</p>
+                            <p className="text-[10px] text-slate-400">Order #DP-9481 · Lumix</p>
+                          </div>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">
+                            Shipped (CJ)
+                          </span>
+                          <span className="font-black text-emerald-600 shrink-0">+$42.50</span>
                         </div>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                          Tracking Generated
-                        </span>
-                        <span className="font-black text-emerald-600">+$91.00</span>
+                        <div className="px-4 py-3 flex items-center justify-between gap-2">
+                          <div>
+                            <p className="font-bold text-slate-900">ANC Headphones</p>
+                            <p className="text-[10px] text-slate-400">Order #DP-9480 · Pulse</p>
+                          </div>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                            Tracking Gen
+                          </span>
+                          <span className="font-black text-emerald-600 shrink-0">+$91.00</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -226,41 +229,41 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 2: METRICS COUNTERS STRIP (Centered upward reveal with AnimatedCounter) */}
-      <section className="py-12 px-6 bg-[#f8fafc] border-b border-slate-200">
+      <section className="py-8 sm:py-12 px-4 sm:px-6 bg-[#f8fafc] border-b border-slate-200">
         <div className="max-w-7xl mx-auto">
-          <StaggerGrid className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            <StaggerCard className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center">
-              <p className="text-3xl sm:text-4xl font-black text-slate-900">
+          <StaggerGrid className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+            <StaggerCard className="p-4 sm:p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center">
+              <p className="text-2xl sm:text-4xl font-black text-slate-900">
                 <AnimatedCounter target={12450} suffix="+" />
               </p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
+              <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
                 Active Storefronts
               </p>
             </StaggerCard>
 
-            <StaggerCard className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center">
-              <p className="text-3xl sm:text-4xl font-black text-indigo-600">
+            <StaggerCard className="p-4 sm:p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center">
+              <p className="text-2xl sm:text-4xl font-black text-indigo-600">
                 <AnimatedCounter target={48} prefix="$" suffix="M+" />
               </p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
+              <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
                 Gross Merchandise Value
               </p>
             </StaggerCard>
 
-            <StaggerCard className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center">
-              <p className="text-3xl sm:text-4xl font-black text-slate-900">
+            <StaggerCard className="p-4 sm:p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center">
+              <p className="text-2xl sm:text-4xl font-black text-slate-900">
                 <AnimatedCounter target={180} suffix="+" />
               </p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
+              <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
                 Verified B2B Suppliers
               </p>
             </StaggerCard>
 
-            <StaggerCard className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center">
-              <p className="text-3xl sm:text-4xl font-black text-emerald-600">
+            <StaggerCard className="p-4 sm:p-6 rounded-2xl bg-white border border-slate-200/80 shadow-2xs text-center">
+              <p className="text-2xl sm:text-4xl font-black text-emerald-600">
                 <AnimatedCounter target={68} suffix="%" />
               </p>
-              <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
+              <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider mt-1">
                 Average Merchant Margin
               </p>
             </StaggerCard>
@@ -269,13 +272,13 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 3: WORKFLOW / HOW IT WORKS (Alternating Direction: Section 3a is reversed) */}
-      <section id="how-it-works" className="py-20 px-6 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto space-y-16">
+      <section id="how-it-works" className="py-12 sm:py-20 px-4 sm:px-6 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto space-y-10 sm:space-y-16">
           <RevealUp className="text-center max-w-2xl mx-auto">
             <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest block mb-1">
               End-to-End Workflow
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
               From Zero to Scale in 3 Automated Steps
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm mt-2">
@@ -287,11 +290,11 @@ export default function MarketingPage() {
           <TwoSidedSection
             reversed={true}
             leftContent={
-              <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200/90 space-y-4 shadow-sm">
+              <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200/90 space-y-4 shadow-sm">
                 <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white font-black text-base flex items-center justify-center shadow-xs">
                   1
                 </div>
-                <h3 className="text-2xl font-black text-slate-900">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900">
                   Connect Verified Suppliers & Set Smart Margins
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
@@ -299,18 +302,18 @@ export default function MarketingPage() {
                 </p>
                 <div className="space-y-2 pt-2 text-xs font-medium text-slate-700">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Instant currency conversion & shipping cost breakdown</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Dynamic price guard prevents negative margin sales</span>
                   </div>
                 </div>
               </div>
             }
             rightContent={
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-md space-y-3">
+              <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 shadow-md space-y-3">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <span className="text-xs font-bold text-slate-800">Supplier Integration Catalog</span>
                   <span className="text-[10px] font-bold text-indigo-600 px-2 py-0.5 rounded-full bg-indigo-50">
@@ -341,7 +344,7 @@ export default function MarketingPage() {
           <TwoSidedSection
             reversed={false}
             leftContent={
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-md space-y-3">
+              <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 shadow-md space-y-3">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <span className="text-xs font-bold text-slate-800">Visual Theme Customizer</span>
                   <span className="text-[10px] font-bold text-emerald-700 px-2 py-0.5 rounded-full bg-emerald-50">
@@ -368,11 +371,11 @@ export default function MarketingPage() {
               </div>
             }
             rightContent={
-              <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200/90 space-y-4 shadow-sm">
+              <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200/90 space-y-4 shadow-sm">
                 <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white font-black text-base flex items-center justify-center shadow-xs">
                   2
                 </div>
-                <h3 className="text-2xl font-black text-slate-900">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900">
                   Customize & Publish Your High-Converting Storefront
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
@@ -380,11 +383,11 @@ export default function MarketingPage() {
                 </p>
                 <div className="space-y-2 pt-2 text-xs font-medium text-slate-700">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Zero code required, instantly published to CDN</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Optimized for 95+ Google Lighthouse mobile performance</span>
                   </div>
                 </div>
@@ -396,11 +399,11 @@ export default function MarketingPage() {
           <TwoSidedSection
             reversed={true}
             leftContent={
-              <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200/90 space-y-4 shadow-sm">
+              <div className="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-slate-50 border border-slate-200/90 space-y-4 shadow-sm">
                 <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white font-black text-base flex items-center justify-center shadow-xs">
                   3
                 </div>
-                <h3 className="text-2xl font-black text-slate-900">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-900">
                   Hands-Free Automated Order Fulfillment Queue
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
@@ -408,18 +411,18 @@ export default function MarketingPage() {
                 </p>
                 <div className="space-y-2 pt-2 text-xs font-medium text-slate-700">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Real-time webhook synchronization for tracking updates</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>Stripe & Razorpay instant merchant payouts</span>
                   </div>
                 </div>
               </div>
             }
             rightContent={
-              <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-md space-y-3">
+              <div className="rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 shadow-md space-y-3">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <span className="text-xs font-bold text-slate-800">Fulfillment Pipeline Telemetry</span>
                   <span className="text-[10px] font-bold text-emerald-700 px-2 py-0.5 rounded-full bg-emerald-50">
@@ -445,13 +448,13 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 4: WINNING PRODUCTS INTERACTIVE CAROUSEL */}
-      <section id="catalog" className="py-20 px-6 bg-[#f8fafc] border-b border-slate-200">
-        <div className="max-w-7xl mx-auto space-y-10">
+      <section id="catalog" className="py-12 sm:py-20 px-4 sm:px-6 bg-[#f8fafc] border-b border-slate-200">
+        <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
           <RevealUp className="text-center max-w-2xl mx-auto">
             <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest block mb-1">
               Interactive Product Showcase
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
               Test-Driven High-Margin Catalog
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm mt-2">
@@ -466,13 +469,13 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 5: CURATED STOREFRONT TEMPLATES (Normal Direction Two-Sided Reveal) */}
-      <section id="templates" className="py-20 px-6 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto space-y-10">
+      <section id="templates" className="py-12 sm:py-20 px-4 sm:px-6 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
           <RevealUp className="text-center max-w-2xl mx-auto">
             <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest block mb-1">
               Curated Storefronts
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
               3 Original Responsive Templates
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm mt-2">
@@ -481,13 +484,13 @@ export default function MarketingPage() {
           </RevealUp>
 
           {/* Template Switcher Tabs */}
-          <div className="flex justify-center">
-            <div className="bg-slate-100 p-1.5 rounded-2xl inline-flex gap-2 border border-slate-200">
+          <div className="flex justify-start sm:justify-center overflow-x-auto pb-2">
+            <div className="bg-slate-100 p-1.5 rounded-2xl inline-flex gap-1.5 sm:gap-2 border border-slate-200 shrink-0">
               {(["minimal", "fashion", "gadgets"] as const).map((key) => (
                 <button
                   key={key}
                   onClick={() => setActiveTemplate(key)}
-                  className={`px-5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-4 sm:px-5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                     activeTemplate === key
                       ? "bg-white text-indigo-700 shadow-sm"
                       : "text-slate-600 hover:text-slate-900"
@@ -500,41 +503,41 @@ export default function MarketingPage() {
           </div>
 
           {/* Active Template Showcase Card - Normal Two-Sided Reveal */}
-          <div className="rounded-3xl p-6 sm:p-10 border border-slate-200/80 bg-slate-50 shadow-sm">
+          <div className="rounded-2xl sm:rounded-3xl p-4 sm:p-10 border border-slate-200/80 bg-slate-50 shadow-sm">
             <TwoSidedSection
               reversed={false}
               leftContent={
-                <div className="space-y-5">
+                <div className="space-y-4 sm:space-y-5">
                   <span className="inline-block text-[11px] font-bold px-3 py-1 rounded-full bg-white text-indigo-700 border border-slate-200 shadow-2xs">
                     {templatePreviews[activeTemplate].tag}
                   </span>
-                  <h4 className="text-2xl sm:text-3xl font-black text-slate-900">
+                  <h4 className="text-xl sm:text-3xl font-black text-slate-900">
                     {templatePreviews[activeTemplate].name}
                   </h4>
                   <p className="text-slate-600 leading-relaxed text-xs sm:text-sm">
                     {templatePreviews[activeTemplate].desc}
                   </p>
 
-                  <div className="space-y-2.5 pt-1">
+                  <div className="space-y-2 pt-1">
                     <div className="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                       <span>Dynamic announcement bar & brand typography</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                       <span>Variant selectors, stock badges & compare-at pricing</span>
                     </div>
                     <div className="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                       <span>Server-validated shopping cart with instant checkout</span>
                     </div>
                   </div>
 
-                  <div className="pt-3 flex items-center gap-3">
+                  <div className="pt-2 sm:pt-3 flex items-center gap-3">
                     <Link
                       href={`/store/${templatePreviews[activeTemplate].slug}`}
                       target="_blank"
-                      className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition-all shadow-sm"
+                      className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition-all shadow-sm"
                     >
                       <span>Launch Live Storefront</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -547,13 +550,13 @@ export default function MarketingPage() {
                   <img
                     src={templatePreviews[activeTemplate].image}
                     alt={templatePreviews[activeTemplate].name}
-                    className="w-full h-[360px] object-cover"
+                    className="w-full h-[260px] sm:h-[360px] object-cover"
                   />
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-slate-800 bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-                    <span className="font-mono text-[11px]">
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-slate-800 bg-white/95 backdrop-blur-md px-3 sm:px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
+                    <span className="font-mono text-[10px] sm:text-[11px]">
                       Slug: <strong>/{templatePreviews[activeTemplate].slug}</strong>
                     </span>
-                    <span className="text-emerald-700 font-bold flex items-center gap-1.5 text-[11px]">
+                    <span className="text-emerald-700 font-bold flex items-center gap-1.5 text-[10px] sm:text-[11px]">
                       <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                       Live Storefront
                     </span>
@@ -566,13 +569,13 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 6: INTEGRATIONS & GATEWAYS CAROUSEL */}
-      <section id="integrations" className="py-20 px-6 bg-[#f8fafc] border-b border-slate-200">
-        <div className="max-w-7xl mx-auto space-y-10">
+      <section id="integrations" className="py-12 sm:py-20 px-4 sm:px-6 bg-[#f8fafc] border-b border-slate-200">
+        <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
           <RevealUp className="text-center max-w-2xl mx-auto">
             <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest block mb-1">
               Native Integrations
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
               Suppliers, Gateways & Global Couriers
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm mt-2">
@@ -587,13 +590,13 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 7: MERCHANT TESTIMONIAL CAROUSEL */}
-      <section id="reviews" className="py-20 px-6 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto space-y-10">
+      <section id="reviews" className="py-12 sm:py-20 px-4 sm:px-6 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto space-y-8 sm:space-y-10">
           <RevealUp className="text-center max-w-2xl mx-auto">
             <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest block mb-1">
               Merchant Testimonials
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
               Loved by Independent Brand Operators
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm mt-2">
@@ -608,13 +611,13 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 8: PRICING PLANS (Staggered Card Grid Reveal) */}
-      <section id="pricing" className="py-20 px-6 bg-[#f8fafc] border-b border-slate-200">
-        <div className="max-w-7xl mx-auto space-y-12">
+      <section id="pricing" className="py-12 sm:py-20 px-4 sm:px-6 bg-[#f8fafc] border-b border-slate-200">
+        <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
           <RevealUp className="text-center max-w-2xl mx-auto">
             <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest block mb-1">
               Transparent Plans
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
               Predictable SaaS Subscriptions
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm mt-2">
@@ -624,7 +627,7 @@ export default function MarketingPage() {
 
           <StaggerGrid className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
             {/* Starter */}
-            <StaggerCard className="rounded-3xl p-8 bg-white border border-slate-200/80 shadow-2xs flex flex-col justify-between">
+            <StaggerCard className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 bg-white border border-slate-200/80 shadow-2xs flex flex-col justify-between">
               <div>
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700">
                   Starter
@@ -632,21 +635,21 @@ export default function MarketingPage() {
                 <h4 className="text-xl font-black text-slate-900 mt-4 mb-1">Starter Launch</h4>
                 <p className="text-xs text-slate-500 mb-6">For new merchants launching their first store.</p>
                 <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-black text-slate-900">$29</span>
+                  <span className="text-3xl sm:text-4xl font-black text-slate-900">$29</span>
                   <span className="text-slate-500 text-xs font-medium">/month</span>
                 </div>
                 <ul className="space-y-3 text-xs text-slate-700 font-medium mb-8">
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 1 Active Storefront
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> 1 Active Storefront
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Up to 50 Products
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Up to 50 Products
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Standard Templates
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Standard Templates
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Supplier Catalog Sync
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Supplier Catalog Sync
                   </li>
                 </ul>
               </div>
@@ -659,7 +662,7 @@ export default function MarketingPage() {
             </StaggerCard>
 
             {/* Pro */}
-            <StaggerCard className="rounded-3xl p-8 bg-white border-2 border-indigo-600 shadow-md relative flex flex-col justify-between">
+            <StaggerCard className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 bg-white border-2 border-indigo-600 shadow-md relative flex flex-col justify-between">
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-0.5 rounded-full bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
                 Most Popular
               </div>
@@ -672,37 +675,37 @@ export default function MarketingPage() {
                   For scaling merchants managing multi-niche stores.
                 </p>
                 <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-black text-slate-900">$79</span>
+                  <span className="text-3xl sm:text-4xl font-black text-slate-900">$79</span>
                   <span className="text-slate-500 text-xs font-medium">/month</span>
                 </div>
                 <ul className="space-y-3 text-xs text-slate-700 font-medium mb-8">
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 5 Active Storefronts
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> 5 Active Storefronts
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Up to 500 Products
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Up to 500 Products
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Custom Domains & SSL
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Custom Domains & SSL
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Automated Fulfillment Queue
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Automated Fulfillment Queue
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Profit & Margin Analytics
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Profit & Margin Analytics
                   </li>
                 </ul>
               </div>
               <Link
                 href="/register"
-                className="w-full text-center py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm shadow-indigo-600/25 transition-all"
+                className="w-full text-center py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-xs shadow-sm shadow-indigo-600/25 transition-all"
               >
                 Launch With Pro
               </Link>
             </StaggerCard>
 
             {/* Enterprise */}
-            <StaggerCard className="rounded-3xl p-8 bg-white border border-slate-200/80 shadow-2xs flex flex-col justify-between">
+            <StaggerCard className="rounded-2xl sm:rounded-3xl p-6 sm:p-8 bg-white border border-slate-200/80 shadow-2xs flex flex-col justify-between">
               <div>
                 <span className="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-700">
                   Enterprise
@@ -710,21 +713,21 @@ export default function MarketingPage() {
                 <h4 className="text-xl font-black text-slate-900 mt-4 mb-1">High Volume</h4>
                 <p className="text-xs text-slate-500 mb-6">For high volume ecommerce brand houses.</p>
                 <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-black text-slate-900">$199</span>
+                  <span className="text-3xl sm:text-4xl font-black text-slate-900">$199</span>
                   <span className="text-slate-500 text-xs font-medium">/month</span>
                 </div>
                 <ul className="space-y-3 text-xs text-slate-700 font-medium mb-8">
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Unlimited Storefronts
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Unlimited Storefronts
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Unlimited Products
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Unlimited Products
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> 25 Collaborator Seats
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> 25 Collaborator Seats
                   </li>
                   <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Priority Fulfillment SLAs
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> Priority Fulfillment SLAs
                   </li>
                 </ul>
               </div>
@@ -740,23 +743,23 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 9: FAQ & SECURITY (Reversed Two-Sided Reveal) */}
-      <section className="py-20 px-6 bg-white border-b border-slate-200">
+      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto">
           <TwoSidedSection
             reversed={true}
             leftContent={
-              <div className="space-y-6">
+              <div className="space-y-5 sm:space-y-6">
                 <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-widest block">
                   Reliability & Security
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
                   Frequently Asked Questions
                 </h2>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                   Everything you need to know about DropPilot's multi-tenant isolation, automated supplier order routing, and subscription terms.
                 </p>
 
-                <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-3">
+                <div className="p-4 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-3">
                   <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
                     <ShieldCheck className="w-4 h-4 text-indigo-600" />
                     <span>Enterprise Security Standards</span>
@@ -779,9 +782,9 @@ export default function MarketingPage() {
                       <button
                         type="button"
                         onClick={() => setOpenFaq(isOpen ? null : idx)}
-                        className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-slate-50/60 transition-colors"
+                        className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 hover:bg-slate-50/60 transition-colors"
                       >
-                        <span className="text-sm font-bold text-slate-900">{faq.q}</span>
+                        <span className="text-xs sm:text-sm font-bold text-slate-900">{faq.q}</span>
                         <ChevronDown
                           className={`w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0 ${
                             isOpen ? "rotate-180 text-indigo-600" : ""
@@ -789,7 +792,7 @@ export default function MarketingPage() {
                         />
                       </button>
                       {isOpen && (
-                        <div className="px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
+                        <div className="px-4 pb-4 sm:px-5 sm:pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-100 pt-3">
                           {faq.a}
                         </div>
                       )}
@@ -803,9 +806,9 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 10: CALL TO ACTION BANNER (Normal Two-Sided Reveal) */}
-      <section className="py-20 px-6 bg-[#f8fafc] border-b border-slate-200">
+      <section className="py-12 sm:py-20 px-4 sm:px-6 bg-[#f8fafc] border-b border-slate-200">
         <div className="max-w-7xl mx-auto">
-          <div className="rounded-3xl bg-indigo-600 p-8 sm:p-14 text-white shadow-xl">
+          <div className="rounded-2xl sm:rounded-3xl bg-indigo-600 p-6 sm:p-12 text-white shadow-xl">
             <TwoSidedSection
               reversed={false}
               leftContent={
@@ -813,7 +816,7 @@ export default function MarketingPage() {
                   <span className="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-white/20 text-white inline-block">
                     Get Started In Minutes
                   </span>
-                  <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                  <h2 className="text-2xl sm:text-5xl font-black text-white tracking-tight leading-tight">
                     Launch Your Automated Dropshipping Business Today
                   </h2>
                   <p className="text-indigo-100 text-xs sm:text-base leading-relaxed max-w-xl">
@@ -822,8 +825,8 @@ export default function MarketingPage() {
                 </div>
               }
               rightContent={
-                <div className="p-6 rounded-2xl bg-white text-slate-900 space-y-4 shadow-lg">
-                  <h3 className="text-lg font-black text-slate-900">
+                <div className="p-5 sm:p-6 rounded-xl sm:rounded-2xl bg-white text-slate-900 space-y-4 shadow-lg">
+                  <h3 className="text-base sm:text-lg font-black text-slate-900">
                     Create Your Account & Store
                   </h3>
                   <p className="text-xs text-slate-500">
@@ -833,7 +836,7 @@ export default function MarketingPage() {
                   <div className="flex flex-col gap-2.5">
                     <Link
                       href="/register"
-                      className="w-full text-center py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition-all"
+                      className="w-full text-center py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-xs shadow-sm transition-all"
                     >
                       Start Free 14-Day Trial →
                     </Link>
@@ -856,7 +859,7 @@ export default function MarketingPage() {
       </section>
 
       {/* SECTION 11: FOOTER (Clean Two-Sided Entrance) */}
-      <footer className="border-t border-slate-200 py-12 px-6 bg-white">
+      <footer className="border-t border-slate-200 py-8 sm:py-12 px-4 sm:px-6 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <RevealFromLeft>
             <div className="flex items-center gap-3">
@@ -873,7 +876,7 @@ export default function MarketingPage() {
           </RevealFromLeft>
 
           <RevealFromRight>
-            <div className="flex flex-wrap items-center gap-6 text-xs font-bold text-slate-500">
+            <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-6 text-xs font-bold text-slate-500">
               <Link href="/store/lumix" className="hover:text-indigo-600 transition-colors">
                 Lumix Store
               </Link>

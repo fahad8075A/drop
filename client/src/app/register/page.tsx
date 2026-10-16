@@ -32,7 +32,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col justify-center py-12 px-6 sm:px-8">
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col justify-center py-8 sm:py-12 px-4 sm:px-8">
       <RevealUp className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link href="/" className="flex items-center justify-center gap-2 mb-6">
           <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-sm">
@@ -40,7 +40,7 @@ export default function RegisterPage() {
           </div>
           <span className="text-2xl font-black tracking-tight text-slate-900">DropPilot</span>
         </Link>
-        <h2 className="text-center text-2xl font-black text-slate-900 tracking-tight">
+        <h2 className="text-center text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
           Create Your Store Builder Account
         </h2>
         <p className="mt-1 text-center text-xs text-slate-500">
@@ -48,8 +48,8 @@ export default function RegisterPage() {
         </p>
       </RevealUp>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <RevealUp delay={0.12} className="bg-white rounded-3xl p-8 border border-slate-200/80 shadow-md">
+      <div className="mt-6 sm:mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <RevealUp delay={0.12} className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-slate-200/80 shadow-md">
           {error && (
             <div className="mb-6 p-3.5 rounded-xl bg-rose-50 border border-rose-200 flex items-center gap-2.5 text-xs text-rose-700 font-medium">
               <AlertCircle className="w-4 h-4 shrink-0" />

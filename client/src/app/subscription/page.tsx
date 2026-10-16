@@ -206,10 +206,10 @@ export default function SubscriptionSelectionPage() {
   const isCurrentPlanActive = subscription?.status === "ACTIVE";
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 py-12 px-6 sm:px-8">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900 py-8 sm:py-12 px-4 sm:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Navigation / Header */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-200">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8 pb-4 border-b border-slate-200">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-sm">
               DP
@@ -217,7 +217,7 @@ export default function SubscriptionSelectionPage() {
             <span className="text-xl font-black tracking-tight text-slate-900">DropPilot</span>
           </Link>
 
-          <div className="flex items-center gap-3 text-xs">
+          <div className="flex items-center gap-3 text-xs flex-wrap">
             {user ? (
               <span className="text-slate-500">
                 Logged in as <strong className="text-slate-800">{user.email}</strong>
@@ -238,7 +238,7 @@ export default function SubscriptionSelectionPage() {
             <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
             <span>Step 2 of 2: Subscription Activation</span>
           </span>
-          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
             Choose Your DropPilot Plan
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-2 leading-relaxed">
@@ -286,9 +286,9 @@ export default function SubscriptionSelectionPage() {
               <div
                 key={p.code}
                 onClick={() => setSelectedPlan(p.code)}
-                className={`relative rounded-3xl p-6 sm:p-8 cursor-pointer transition-all duration-200 flex flex-col justify-between ${
+                className={`relative rounded-2xl sm:rounded-3xl p-5 sm:p-8 cursor-pointer transition-all duration-200 flex flex-col justify-between ${
                   isSelected
-                    ? "bg-white border-2 border-indigo-600 shadow-xl shadow-indigo-600/10 scale-[1.02]"
+                    ? "bg-white border-2 border-indigo-600 shadow-xl shadow-indigo-600/10 scale-[1.01] sm:scale-[1.02]"
                     : "bg-white border border-slate-200/90 hover:border-slate-300 shadow-sm"
                 }`}
               >
