@@ -88,7 +88,7 @@ export function Navbar() {
           {/* Live Platform Health Badge (Desktop) */}
           <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/80 border border-emerald-200 text-[11px] font-bold text-emerald-700">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Systems Operational · 99.98% SLA</span>
+            
           </div>
         </div>
 

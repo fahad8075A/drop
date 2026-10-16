@@ -99,7 +99,7 @@ export default function MarketingPage() {
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700 shadow-2xs">
                   <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
-                  <span>Next-Gen Multi-Tenant Dropshipping Infrastructure</span>
+                
                 </div>
 
                 <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-slate-900 leading-[1.08]">
